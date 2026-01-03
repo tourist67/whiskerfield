@@ -13,6 +13,9 @@ public class Player extends Entity {
 	Gamepanel gp;
 	KeyHandler keyH;
 
+	int spriteCounter = 0;
+	int spriteNum = 1;
+
 	public Player(Gamepanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
@@ -43,42 +46,70 @@ public class Player extends Entity {
 	}
 
 	public void update() {
-		if (keyH.upPressed == true) {
-      direction = "up";
-			y -= speed;
-		}
-		if (keyH.downPressed == true) { 
-      direction = "down";
-			y += speed;
-		}
-		if (keyH.leftPressed == true) {
-      direction = "left";
-			x -= speed;
-		}
-		if (keyH.rightPressed == true) {
-      direction = "right";
-			x += speed;
+		if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
+			if (keyH.upPressed == true) {
+				direction = "up";
+				y -= speed;
+			}
+			if (keyH.downPressed == true) { 
+				direction = "down";
+				y += speed;
+			}
+			if (keyH.leftPressed == true) {
+				direction = "left";
+				x -= speed;
+			}
+			if (keyH.rightPressed == true) {
+				direction = "right";
+				x += speed;
+			}
+
+			spriteCounter++;
+			if (spriteCounter > 12) {
+				if (spriteNum == 1) {
+					spriteNum = 2;
+				} else {
+					spriteNum = 1;
+				}
+				spriteCounter = 0;
+			}
 		}
 	}
 
 	public void draw(Graphics2D g2) {
-    BufferedImage image = null;
+		BufferedImage image = null;
 
-    switch (direction) {
-      case "up":
-        image = up1;
-        break;
-      case "down":
-        image = down1;
-        break;
-      case "left":
-        image = left1;
-        break;
-      case "right":
-        image = right1;
-        break;
-    }
+		switch (direction) {
+			case "up":
+				if (spriteNum == 1) {
+					image = up1;
+				} else {
+					image = up2;
+				}
+				break;
+			case "down":
+				if (spriteNum == 1) {
+					image = down1;
+				} else {
+					image = down2;
+				}
+				break;
+			case "left":
+				if (spriteNum == 1) {
+					image = left1;
+				} else {
+					image = left2;
+				}
+				break;
+			case "right":
+				if (spriteNum == 1) {
+					image = right1;
+				} else {
+					image = right2;
+				}
+				break;
+		}
 
-    g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*3, null);
+		g2.drawImage(image, x, y, gp.tileSize*3, gp.tileSize*3, null);
 	}
 }
