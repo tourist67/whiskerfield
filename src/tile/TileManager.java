@@ -53,9 +53,11 @@ public class TileManager {
     try {
       tile[0] = new Tile();
       tile[0].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/res/tiles/grass/grass1.png"));
+      tile[0].type = "grass";
 
       tile[1] = new Tile();
       tile[1].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/res/tiles/dirt/dirt1.png"));
+      tile[1].type = "dirt";
 
       tile[2] = new Tile();
       tile[2].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/res/tiles/house/wood1.png"));

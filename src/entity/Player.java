@@ -19,6 +19,13 @@ public class Player extends Entity {
 	
 	int spriteCounter = 0;
 	int spriteNum = 1;
+	
+	public boolean isActioning = false;
+	int actionCounter = 0;
+	int actionSpriteNum = 1; 
+	BufferedImage actionUp1, actionUp2, actionDown1, actionDown2;
+	BufferedImage actionLeft1, actionLeft2, actionRight1, actionRight2;
+
 
 	public Player(Gamepanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -30,6 +37,7 @@ public class Player extends Entity {
 		screenY = gp.screenHeight / 2 - (gp.tileSize * 3) / 2;
 		setDefaultValues();
 		getPlayerImage();
+		getActionImage();
 	}
 
 	public void setDefaultValues() {
@@ -54,7 +62,45 @@ public class Player extends Entity {
 		}
 	}
 
+	public void getActionImage() {
+		try {
+			actionUp1 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/up_1.png"));
+			actionUp2 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/up_2.png"));
+			actionDown1 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/down_1.png"));
+			actionDown2 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/down_2.png"));
+			actionLeft1 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/left_1.png"));
+			actionLeft2 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/left_2.png"));
+			actionRight1 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/right_1.png"));
+			actionRight2 = ImageIO.read(getClass().getResourceAsStream("/res/player/action/right_2.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void update() {
+		// Handle action animation
+		if (keyH.ePressed && !isActioning) {
+			isActioning = true;
+			actionCounter = 0;
+			actionSpriteNum = 1; 
+			keyH.ePressed = false; 
+		}
+		
+		if (isActioning) {
+			actionCounter++;
+			if (actionCounter > 12) { 
+				if (actionSpriteNum == 1) {
+					actionSpriteNum = 2; 
+				} else {
+
+					isActioning = false;
+					actionSpriteNum = 1; 
+				}
+				actionCounter = 0;
+			}
+			return; 
+		}
+		
 		if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
 			if (keyH.upPressed == true) {
 				direction = "up";
@@ -90,7 +136,6 @@ public class Player extends Entity {
 			}
 
 
-
 			spriteCounter++;
 			if (spriteCounter > 12) {
 				if (spriteNum == 1) {
@@ -101,41 +146,61 @@ public class Player extends Entity {
 				spriteCounter = 0;
 			}
 		}
+
 	}
 
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 
-		switch (direction) {
-			case "up":
-				if (spriteNum == 1) {
-					image = up1;
-				} else {
-					image = up2;
-				}
-				break;
-			case "down":
-				if (spriteNum == 1) {
-					image = down1;
-				} else {
-					image = down2;
-				}
-				break;
-			case "left":
-				if (spriteNum == 1) {
-					image = left1;
-				} else {
-					image = left2;
-				}
-				break;
-			case "right":
-				if (spriteNum == 1) {
-					image = right1;
-				} else {
-					image = right2;
-				}
-				break;
+		if (isActioning) {
+			switch (direction) {
+				case "up":
+					image = (actionSpriteNum == 2) ? actionUp2 : actionUp1;
+					break;
+				case "down":
+					image = (actionSpriteNum == 2) ? actionDown2 : actionDown1;
+					break;
+				case "left":
+					image = (actionSpriteNum == 2) ? actionLeft2 : actionLeft1;
+					break;
+				case "right":
+					image = (actionSpriteNum == 2) ? actionRight2 : actionRight1;
+					break;
+			}
+		} else {
+
+			switch (direction) {
+				case "up":
+					if (spriteNum == 1) {
+						image = up1;
+					} else {
+						image = up2;
+					}
+					break;
+				case "down":
+					if (spriteNum == 1) {
+						image = down1;
+					} else {
+						image = down2;
+					}
+					break;
+				case "left":
+					if (spriteNum == 1) {
+						image = left1;
+					} else {
+						image = left2;
+					}
+					break;
+				case "right":
+					if (spriteNum == 1) {
+						image = right1;
+					} else {
+						image = right2;
+					}
+					break;
+			}
 		}
+
 
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 	}
