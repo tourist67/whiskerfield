@@ -25,7 +25,7 @@ public class Gamepanel extends JPanel implements Runnable {
 	Player player = new Player(this, keyH);
 
 	// FPS
-	int FPS = 60;
+	int FPS = 120;
 
 	public Gamepanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
