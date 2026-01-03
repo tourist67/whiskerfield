@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -23,6 +24,8 @@ public class Player extends Entity {
 		this.gp = gp;
 		this.keyH = keyH;
 
+		solidArea = new Rectangle(8,16,32,32); 
+
 		screenX = gp.screenWidth / 2 - (gp.tileSize * 3) / 2;
 		screenY = gp.screenHeight / 2 - (gp.tileSize * 3) / 2;
 		setDefaultValues();
@@ -30,8 +33,8 @@ public class Player extends Entity {
 	}
 
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 15;
-		worldY = gp.tileSize * 19;
+		worldX = gp.tileSize * 10;
+		worldY = gp.tileSize * 10;
 		speed = 3;
 		direction = "down";
 	}
@@ -55,20 +58,38 @@ public class Player extends Entity {
 		if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
 			if (keyH.upPressed == true) {
 				direction = "up";
-				worldY -= speed;
 			}
 			if (keyH.downPressed == true) { 
 				direction = "down";
-				worldY += speed;
 			}
 			if (keyH.leftPressed == true) {
 				direction = "left";
-				worldX -= speed;
 			}
 			if (keyH.rightPressed == true) {
 				direction = "right";
-				worldX += speed;
 			}
+
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+
+			if (collisionOn == false) {
+				switch (direction) {
+					case "up":
+						worldY -= speed;
+						break;
+					case "down":
+						worldY += speed;
+						break;
+					case "left":
+						worldX -= speed;
+						break;
+					case "right":
+						worldX += speed;
+						break;
+				}
+			}
+
+
 
 			spriteCounter++;
 			if (spriteCounter > 12) {
@@ -116,7 +137,6 @@ public class Player extends Entity {
 				break;
 		}
 
-		// *3 for scaling up the player size
-		g2.drawImage(image, screenX, screenY, gp.tileSize*3, gp.tileSize*3, null);
+		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 	}
 }
