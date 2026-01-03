@@ -30,16 +30,18 @@ public class TileManager {
 
         while(col < gp.maxWorldCol && row < gp.maxWorldRow) {
             String line = br.readLine();
-
+            if (line == null) {
+              break;
+            }
             while(col < gp.maxWorldCol) {
-                String numbers[] = line.split(" ");
-                int num = Integer.parseInt(numbers[col]);
-                mapTileNum[col][row] = num;
-                col++;
+              String numbers[] = line.split(" ");
+              int num = Integer.parseInt(numbers[col]);
+              mapTileNum[col][row] = num;
+              col++;
             }
             if(col == gp.maxWorldCol) {
-                col = 0;
-                row++;
+              col = 0;
+              row++;
             }
         }
     }catch(Exception e) {
@@ -58,6 +60,9 @@ public class TileManager {
       tile[2] = new Tile();
       tile[2].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/res/tiles/house/wood1.png"));
 
+      tile[3] = new Tile();
+      tile[3].image = javax.imageio.ImageIO.read(getClass().getResourceAsStream("/res/tiles/house/wood1.png"));
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -74,7 +79,7 @@ public class TileManager {
         int worldY = worldRow * gp.tileSize;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-
+        
         g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
         worldCol++;
