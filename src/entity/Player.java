@@ -360,4 +360,13 @@ public class Player extends Entity {
 			}
 		}
 	}
+	
+	public int getFruitCount() {
+		for (int i = 0; i < inventoryCount; i++) {
+			if (inventory[i] != null && inventory[i].name.equals("Plant Pickup")) {
+				return inventory[i].stackCount;
+			}
+		}
+		return 0;
+	}
 }

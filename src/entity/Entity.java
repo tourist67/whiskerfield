@@ -63,8 +63,8 @@ public class Entity {
   }
 
   public void speak() {
-    // Check fruit count for dialogue - override in specific NPCs if needed
-    if (gp.player.harvestCount > 0) {
+    // Check actual fruit count in inventory
+    if (gp.player.getFruitCount() > 0) {
       gp.ui.currentDialogue = dialogues[1]; // "Glad doing business with you!"
     } else {
       gp.ui.currentDialogue = dialogues[0]; // "I love eating fruits! Sell me fruits..."
