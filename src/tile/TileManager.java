@@ -135,6 +135,10 @@ public class TileManager {
   }
 
   public void draw(Graphics2D g2) {
+    // Fill the screen with water color for areas outside the map
+    g2.setColor(new java.awt.Color(133, 194, 194)); // Water color
+    g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+    
     int worldCol = 0;
     int worldRow = 0;
 
