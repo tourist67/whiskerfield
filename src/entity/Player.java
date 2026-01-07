@@ -393,6 +393,7 @@ public class Player extends Entity {
 	}
 	
 	public void addHarvestToInventory() {
+		gp.playSoundEffect(2);
 		// Check if we already have a plant pickup stack in inventory
 		for (int i = 0; i < inventoryCount; i++) {
 			if (inventory[i] != null && inventory[i].name.equals("Plant Pickup")) {

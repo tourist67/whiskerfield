@@ -167,6 +167,7 @@ public class Gamepanel extends JPanel implements Runnable {
 		sound.setFile(i);
 		sound.play();
 		sound.loop();
+		sound.setVolume(ui.musicVolume); // Apply current volume setting
 	}
 
 	public void stopMusic() {
@@ -175,6 +176,10 @@ public class Gamepanel extends JPanel implements Runnable {
 
 	public void playSoundEffect(int i) {
 		sound.playSFX(i);
+	}
+	
+	public void setMusicVolume(int level) {
+		sound.setVolume(level);
 	}
 	
 	public void playDialogueMusic() {

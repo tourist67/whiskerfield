@@ -21,11 +21,52 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
 
+		// Pause state controls
+		if (gp.gameState == gp.pauseState) {
+			if (code == KeyEvent.VK_ESCAPE) {
+				gp.gameState = gp.playState;
+			}
+			if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W) {
+				gp.ui.pauseMenuSelection--;
+				if (gp.ui.pauseMenuSelection < 0) {
+					gp.ui.pauseMenuSelection = 1;
+				}
+			}
+			if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S) {
+				gp.ui.pauseMenuSelection++;
+				if (gp.ui.pauseMenuSelection > 1) {
+					gp.ui.pauseMenuSelection = 0;
+				}
+			}
+			// Left/Right to adjust volume when Music is selected
+			if (gp.ui.pauseMenuSelection == 0) {
+				if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A) {
+					gp.ui.musicVolume--;
+					if (gp.ui.musicVolume < 0) {
+						gp.ui.musicVolume = 0;
+					}
+					gp.setMusicVolume(gp.ui.musicVolume);
+				}
+				if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D) {
+					gp.ui.musicVolume++;
+					if (gp.ui.musicVolume > 5) {
+						gp.ui.musicVolume = 5;
+					}
+					gp.setMusicVolume(gp.ui.musicVolume);
+				}
+			}
+			// Enter to select Back
+			if (code == KeyEvent.VK_ENTER) {
+				if (gp.ui.pauseMenuSelection == 1) {
+					gp.gameState = gp.playState;
+				}
+			}
+			return; // Don't process other keys in pause state
+		}
+
 		if (code == KeyEvent.VK_ESCAPE) {
 			if (gp.gameState == gp.playState) {
 				gp.gameState = gp.pauseState;
-			} else if (gp.gameState == gp.pauseState) {
-				gp.gameState = gp.playState;
 			}
 		}
 

@@ -9,7 +9,12 @@ public class UI {
     Gamepanel gp;
     Font arial_40;
     Font arial_20;
+    Font arial_30;
     public String currentDialogue = "";
+    
+    // Pause menu
+    public int pauseMenuSelection = 0; // 0 = Music, 1 = Back
+    public int musicVolume = 3; // 0-5 scale
     
     // Typing effect variables
     private String fullDialogue = "";
@@ -21,6 +26,7 @@ public class UI {
     public UI(Gamepanel gp) {
         this.gp = gp;
         arial_40 = new Font("Arial", Font.BOLD, 40);
+        arial_30 = new Font("Arial", Font.BOLD, 30);
         arial_20 = new Font("Arial", Font.PLAIN, 20);
     }
 
@@ -73,17 +79,73 @@ public class UI {
     }
 
     public void drawPauseScreen(Graphics2D g2) {
-        g2.setFont(arial_40);
+        // Draw semi-transparent overlay
+        g2.setColor(new Color(0, 0, 0, 150));
+        g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        
+        // Options box dimensions
+        int boxWidth = gp.tileSize * 6;
+        int boxHeight = gp.tileSize * 5;
+        int boxX = gp.screenWidth / 2 - boxWidth / 2;
+        int boxY = gp.screenHeight / 2 - boxHeight / 2;
+        
+        // Draw options box background
+        g2.setColor(new Color(30, 30, 30, 240));
+        g2.fillRoundRect(boxX, boxY, boxWidth, boxHeight, 20, 20);
+        
+        // Draw border
         g2.setColor(Color.white);
+        g2.setStroke(new BasicStroke(3));
+        g2.drawRoundRect(boxX + 3, boxY + 3, boxWidth - 6, boxHeight - 6, 18, 18);
         
-        String text = "PAUSED";
+        // Draw "Options" title
+        g2.setFont(arial_30);
+        g2.setColor(Color.white);
+        String title = "Options";
+        int titleWidth = (int) g2.getFontMetrics().getStringBounds(title, g2).getWidth();
+        g2.drawString(title, boxX + (boxWidth - titleWidth) / 2, boxY + 45);
         
-        // Center the text
-        int length = (int) g2.getFontMetrics().getStringBounds(text, g2).getWidth();
-        int x = gp.screenWidth / 2 - length / 2;
-        int y = gp.screenHeight / 2;
+        // Draw Music option
+        g2.setFont(arial_20);
+        int optionX = boxX + 30;
+        int musicY = boxY + 100;
         
-        g2.drawString(text, x, y);
+        // Selection indicator for Music
+        if (pauseMenuSelection == 0) {
+            g2.setColor(Color.yellow);
+            g2.drawString(">", optionX - 20, musicY);
+        }
+        g2.setColor(Color.white);
+        g2.drawString("Music", optionX, musicY);
+        
+        // Draw volume bar
+        int barX = optionX + 80;
+        int barY = musicY - 15;
+        int barWidth = 100;
+        int barHeight = 20;
+        
+        // Bar background
+        g2.setColor(new Color(60, 60, 60));
+        g2.fillRect(barX, barY, barWidth, barHeight);
+        
+        // Bar fill based on volume
+        g2.setColor(Color.white);
+        int fillWidth = (int) (barWidth * (musicVolume / 5.0));
+        g2.fillRect(barX, barY, fillWidth, barHeight);
+        
+        // Bar border
+        g2.setColor(Color.white);
+        g2.setStroke(new BasicStroke(2));
+        g2.drawRect(barX, barY, barWidth, barHeight);
+        
+        // Draw Back option
+        int backY = musicY + 50;
+        if (pauseMenuSelection == 1) {
+            g2.setColor(Color.yellow);
+            g2.drawString(">", optionX - 20, backY);
+        }
+        g2.setColor(Color.white);
+        g2.drawString("Back", optionX, backY);
     }
     
     public void drawDialogueScreen(Graphics2D g2) {

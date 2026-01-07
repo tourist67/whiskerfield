@@ -5,12 +5,14 @@ import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class Sound {
   Clip clip;
   Clip sfxClip; // Separate clip for sound effects
   Clip dialogueClip; // Separate clip for dialogue music
-  URL soundURL[] = new URL[30]; 
+  URL soundURL[] = new URL[30];
+  float currentVolume = 0f; // 0 = normal, negative = quieter
 
   public Sound() {
     soundURL[0] = getClass().getResource("/res/sound/main.wav");
@@ -41,6 +43,25 @@ public class Sound {
 
   public void stop(){
     clip.stop();
+  }
+  
+  // Set volume for music (0-5 scale, where 5 is full volume)
+  public void setVolume(int level) {
+    if (clip != null) {
+      try {
+        FloatControl fc = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        // Convert 0-5 to decibel scale (-80 to 0)
+        if (level == 0) {
+          fc.setValue(-80f); // Mute
+        } else {
+          float volume = -30f + (level * 6f); // -30 to 0 range
+          fc.setValue(volume);
+        }
+        currentVolume = level;
+      } catch (Exception e) {
+        // Some systems may not support volume control
+      }
+    }
   }
   
   // Play sound effect without interrupting music
