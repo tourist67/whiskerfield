@@ -35,7 +35,7 @@ public class NPC2 extends Entity {
     public void setDialogue() {
         dialogues[0] = "Welcome to Whiskerfield!";
         dialogues[1] = "Press E to till the ground with your hoe.";
-        dialogues[2] = "Then press R to plant  nd T to harvest.";
+        dialogues[2] = "Then press R to plant and T to harvest.";
         dialogues[3] = "Sell your fruits n get rich!";
     }
 
