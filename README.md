@@ -49,10 +49,9 @@ Whiskerfield is a simple farming simulation where you till the land, plant seeds
 - **Language:** Java 21
 - **Graphics:** Java AWT/Swing (no game engines or external libraries)
 - **Architecture:** 
-  - Tile-based world rendering with screen culling optimization
+  - Tile-based world rendering with screen optimization
   - Entity system for player and NPCs
-  - Custom collision detection
-  - Typing dialogue system with sequential conversations
+  - Collision detection
 - **Resolution:** 768x576 (48px tiles, 16x12 grid)
 - **Target FPS:** 60
 
@@ -60,7 +59,7 @@ Whiskerfield is a simple farming simulation where you till the land, plant seeds
 
 ## 🔮 Future Plans
 
-- [ ] **Shop System** — Spend your hard-earned money on upgrades
+- [ ] **Shop System** — Spend your hard earned money on upgrades
 - [ ] **Fences & Decorations** — Customize your farm layout
 - [ ] **More Crops** — Variety of plants with different growth times and values
 - [ ] **Save/Load** — Persistent game progress
@@ -76,7 +75,6 @@ Whiskerfield is a simple farming simulation where you till the land, plant seeds
 | R | Plant seeds |
 | T | Harvest crops |
 | ESC | Pause menu(use arrow keys and enter to navigate) |
-|
 
 ---
 
