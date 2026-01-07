@@ -24,8 +24,8 @@ public class NPC1 extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 21;
-        worldY = gp.tileSize * 21;
+        worldX = gp.tileSize * 24;
+        worldY = gp.tileSize * 18;
         speed = 1;
         direction = "down";
         
