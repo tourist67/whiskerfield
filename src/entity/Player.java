@@ -348,6 +348,8 @@ public class Player extends Entity {
 			int tileNum = gp.tileM.mapTileNum[tileCol][tileRow];
 			// Can only plant on tilled dirt (tile 4)
 			if (gp.tileM.tile[tileNum].type != null && gp.tileM.tile[tileNum].type.equals("tilled")) {
+				gp.playSoundEffect(3);
+
 				// Plant the seed - set to plant stage 1 (tile 5)
 				gp.tileM.mapTileNum[tileCol][tileRow] = 5;
 				// No decrement - seed packet has infinite seeds
