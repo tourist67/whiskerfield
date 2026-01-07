@@ -46,7 +46,7 @@ public class Gamepanel extends JPanel implements Runnable {
 	Sound sound = new Sound();
 	public UI ui = new UI(this);
 
-	public SuperObject obj[] = new SuperObject[10];
+	public SuperObject obj[] = new SuperObject[100];
 	public Entity npc[] = new Entity[10];
 	public AssetSetter assetSetter = new AssetSetter(this);
 	
@@ -174,8 +174,7 @@ public class Gamepanel extends JPanel implements Runnable {
 	}
 
 	public void playSoundEffect(int i) {
-		sound.setFile(i);
-		sound.play();
+		sound.playSFX(i);
 	}
 	
 	public void playDialogueMusic() {

@@ -85,6 +85,44 @@ public class CollisionChecker {
     }
     return index;
   }
+  
+  public void checkObjectCollision(Entity entity) {
+    for (int i = 0; i < gp.obj.length; i++) {
+      if (gp.obj[i] != null && gp.obj[i].collision) {
+        // Get entity's solid area position
+        int entitySolidAreaX = entity.worldX + entity.solidArea.x;
+        int entitySolidAreaY = entity.worldY + entity.solidArea.y;
+        
+        // Get object's solid area (using full tile size)
+        int objSolidAreaX = gp.obj[i].worldX;
+        int objSolidAreaY = gp.obj[i].worldY;
+        
+        // Predict next position based on direction
+        switch(entity.direction) {
+          case "up":
+            entitySolidAreaY -= entity.speed;
+            break;
+          case "down":
+            entitySolidAreaY += entity.speed;
+            break;
+          case "left":
+            entitySolidAreaX -= entity.speed;
+            break;
+          case "right":
+            entitySolidAreaX += entity.speed;
+            break;
+        }
+        
+        // Check collision
+        if (entitySolidAreaX < objSolidAreaX + gp.tileSize &&
+            entitySolidAreaX + entity.solidArea.width > objSolidAreaX &&
+            entitySolidAreaY < objSolidAreaY + gp.tileSize &&
+            entitySolidAreaY + entity.solidArea.height > objSolidAreaY) {
+          entity.collisionOn = true;
+        }
+      }
+    }
+  }
 
   public int checkEntity(Entity entity, Entity[] target) {
     int index = 999;

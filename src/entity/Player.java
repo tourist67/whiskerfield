@@ -47,6 +47,7 @@ public class Player extends Entity {
 	int idleCounter = 0;
 	int idleSpriteNum = 1;
 	boolean isMoving = false;
+	int walkSoundCounter = 0;
 
 
 	public Player(Gamepanel gp, KeyHandler keyH) {
@@ -185,6 +186,7 @@ public class Player extends Entity {
 
 			collisionOn = false;
 			gp.cChecker.checkTile(this);
+			gp.cChecker.checkObjectCollision(this);
 			
 			// Check NPC collision
 			int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
@@ -216,12 +218,18 @@ public class Player extends Entity {
 					spriteNum = 1;
 				}
 				spriteCounter = 0;
-				// Play grass walking sound
+			}
+			
+			// Play grass walking sound less frequently
+			walkSoundCounter++;
+			if (walkSoundCounter > 30) { // Play sound every ~0.5 seconds instead of every sprite change
 				gp.playSoundEffect(1);
+				walkSoundCounter = 0;
 			}
 		} else {
 			// Not moving - play idle animation
 			isMoving = false;
+			walkSoundCounter = 0; // Reset walk sound counter when not moving
 			idleCounter++;
 			if (idleCounter > 30) { // Slower animation for idle
 				if (idleSpriteNum == 1) {
@@ -404,6 +412,11 @@ public class Player extends Entity {
 	
 	public void pickUpObject(int index) {
 		if (index != 999) {
+			// Only pick up pickupable objects
+			if (!gp.obj[index].pickupable) {
+				return;
+			}
+			
 			String objectName = gp.obj[index].name;
 			
 			// Play pickup sound

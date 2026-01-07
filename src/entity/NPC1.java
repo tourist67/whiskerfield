@@ -58,6 +58,7 @@ public class NPC1 extends Entity {
 
         collisionOn = false;
         gp.cChecker.checkTile(this);
+        gp.cChecker.checkObjectCollision(this);
 
         // If collision is false, move
         if (!collisionOn) {
