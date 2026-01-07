@@ -33,7 +33,7 @@ public class NPC1 extends Entity {
     }
     
     public void setDialogue() {
-        dialogues[0] = "I love eating fruits! Sell me fruits and I will give you money!";
+        dialogues[0] = "Love me some fruits... ill pay you for them!";
         dialogues[1] = "Glad doing business with you!";
     }
 

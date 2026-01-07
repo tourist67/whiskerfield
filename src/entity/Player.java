@@ -59,8 +59,8 @@ public class Player extends Entity {
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 
-		screenX = gp.screenWidth / 2 - (gp.tileSize * 3) / 2;
-		screenY = gp.screenHeight / 2 - (gp.tileSize * 3) / 2;
+		screenX = gp.screenWidth / 2 - (gp.tileSize /2);
+		screenY = gp.screenHeight / 2 - (gp.tileSize/2);
 		setDefaultValues();
 		getPlayerImage();
 		getActionImage();
@@ -68,8 +68,8 @@ public class Player extends Entity {
 	}
 
 	public void setDefaultValues() {
-		worldX = gp.tileSize * 20;
-		worldY = gp.tileSize * 20;
+		worldX = gp.tileSize * 19;
+		worldY = gp.tileSize * 12;
 		speed = 3;
 		direction = "down";
 	}
